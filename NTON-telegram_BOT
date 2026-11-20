@@ -1,0 +1,34 @@
+import asyncio
+from datetime import datetime
+from telegram import Bot
+
+BOT_TOKEN = "9121419277:AAHXg7YKjiueNriLK-lQz62pJN-aK9-kUyg"
+CHANNEL_ID = -1003956313632
+
+POST_TEXT = """🪙 $NTON — NEW Token on TON Network
+
+We are in our pre‑launch phase, and we are building a genuine, strong community together.
+
+Great things are being built behind the scenes. Stay tuned for our mining bot, updates, and more!
+
+🔗 Join our community: https://t.me/newTokenOnTonNetwork
+
+#$NTON #TONNetwork #PreLaunch #CryptoCommunity
+"""
+
+async def send_post():
+    bot = Bot(token=BOT_TOKEN)
+    await bot.send_message(chat_id=CHANNEL_ID, text=POST_TEXT)
+
+async def main():
+    while True:
+        now = datetime.now()
+        target = now.replace(hour=8, minute=0, second=0, microsecond=0)
+        if now > target:
+            target = target.replace(day=target.day + 1)
+        wait_seconds = (target - now).total_seconds()
+        await asyncio.sleep(wait_seconds)
+        await send_post()
+
+if __name__ == "__main__":
+    asyncio.run(main())
